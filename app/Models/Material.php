@@ -15,3 +15,4 @@ class Material extends Model
         'user_id'
     ];
 }
+
