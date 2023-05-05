@@ -10,15 +10,15 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("Você está logado!") }}
-                    @foreach (Auth::user(-> // meu banco/crud//))
+                    @foreach (Auth::user()->myMaterials as $material)
                     <div>
                         class="
                         flex justify-between border-b mb=2 gap-4
                         hover:bg-gray300
                         "
                         x-data ="{showDelete:false,showEdit:false}">
-                        <div>{{$//meu banco//->description}}</div>
-                        <div>{{$//meu banco//->expiration}}</div>
+                        <div>{{$material ->description}}</div>
+                        <div>{{$material ->expiration}}</div>
                         </div>
                         <div class ="flex gap-2">
                             <div>
@@ -33,7 +33,7 @@
                                 <div class="w-96 bg-white p-4 absolute left-1/4 right-1/4 z-10">
                                     <h2 class="text-xl front-bold text-center">Are you sure?</h2>
                                     <div class="flex justify-between mt-4">
-                                        <from action="{{ route('//meuBanco.destroy', $meuBanco )}}" method="POST">
+                                        <from action="{{ route('material.destroy', $material )}}" method="POST">
                                             @csrf  
                                             @method('DELETE')
                                         <x-danger-button>Delete anyway</x-danger-button>
@@ -47,12 +47,12 @@
                         <template x-if="showEdit">
                             <div class="absolute top-0 bottom-0 left-0 right-0 bg-gray-800 bg-opacity-20 z-0">
                                <div class="w-96 bg-white p-4 absolute left-1/4 right-1/4 top-1/4 z-10">
-                                <h2 class="text-xl front-bold text-center">{{ $meuBanco->description }}</h2>
-                                <from class="my-4" acion="{{ route('meuBanco.update', $meuBanco)}}" method="POST">
+                                <h2 class="text-xl front-bold text-center">{{ $material ->description }}</h2>
+                                <from class="my-4" acion="{{ route('material.update', $material)}}" method="POST">
                                     @csrf  
                                     @method('PUT')
-                                    <x-text-input name="description" placeholder="Description" value="{{ $meuBanco->description}}" />
-                                    <x-text-input name="expiration" placeholder="Expiration" value="{{ $meuBanco->expiration}}" />
+                                    <x-text-input name="description" placeholder="Description" value="{{ $material->description}}" />
+                                    <x-text-input name="expiration" placeholder="Expiration" value="{{ $material->expiration}}" />
                                     <x-primary-button class="w-full text-center mt-2">Save</x-primary-button>
                                 </from>
                                 <x-danger-button @click="shoEdit = false" class="w-full">Cancel</x-danger-button>
@@ -62,7 +62,7 @@
                 </div>
                 @endforeach
 
-                <from action="{{route('meuBanco.store')}}" method="POST">
+                <from action="{{route('material.store')}}" method="POST">
                     @csrf 
                     <x-text-input name="description" placeholder="Description"/>
                     <x-text-input name="expiration" placeholder="Expiration" />
