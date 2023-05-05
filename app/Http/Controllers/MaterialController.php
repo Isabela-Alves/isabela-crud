@@ -7,15 +7,7 @@ use Illuminate\Http\Request;
 
 class MaterialController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +27,13 @@ class MaterialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::find(Auth::user()->id)
+        ->myMaterials()
+        ->create([
+            'description'=> $request->description,
+            'expiration'=> $request->expiration
+        ]);
+        return redirect (route('dashboard'));
     }
 
     /**
