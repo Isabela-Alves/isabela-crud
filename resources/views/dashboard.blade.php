@@ -13,10 +13,10 @@
                     @foreach (Auth::user()->myMaterials as $material)
                     <div>
                         class="
-                        flex justify-between border-b mb=2 gap-4
-                        hover:bg-gray300
+                        flex justify-between border-b mb-2 gap-4
+                        hover:bg-gray-300
                         "
-                        x-data ="{showDelete:false,showEdit:false}">
+                        x-data ="{showDelete: false,showEdit: false}">
                         <div>{{$material ->description}}</div>
                         <div>{{$material ->expiration}}</div>
                         </div>
@@ -25,7 +25,7 @@
                                <span class="cursor-pointer px-2 bg-red-500 text-white" @click="showDelete = true">Delete</span>
                             </div>
                             <div> 
-                                <span clss="cursor-pointer px=2 bg-blue-500 text-white" @click="showEdit = true">Edit</span>
+                                <span clss="cursor-pointer px-2 bg-blue-500 text-white" @click="showEdit = true">Edit</span>
                             </div>
                         </div>
                         <template x-if="showDelete">
@@ -55,7 +55,7 @@
                                     <x-text-input name="expiration" placeholder="Expiration" value="{{ $material->expiration}}" />
                                     <x-primary-button class="w-full text-center mt-2">Save</x-primary-button>
                                 </from>
-                                <x-danger-button @click="shoEdit = false" class="w-full">Cancel</x-danger-button>
+                                <x-danger-button @click="showEdit = false" class="w-full">Cancel</x-danger-button>
                                </div>
                             </div>
                         </template>
