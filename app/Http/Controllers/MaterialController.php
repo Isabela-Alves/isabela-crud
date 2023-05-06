@@ -47,16 +47,6 @@ class MaterialController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Material  $material
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Material $material)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -67,7 +57,11 @@ class MaterialController extends Controller
      */
     public function update(Request $request, Material $material)
     {
-        //
+        $material->description = $request->description;
+        $material->expiration = $request->expiration;
+        $material->save();
+
+        return redirect(route('dashboard'));
     }
 
     /**
@@ -78,6 +72,7 @@ class MaterialController extends Controller
      */
     public function destroy(Material $material)
     {
-        //
+        $material->delete();
+        return redirect(route('dashboard'));
     }
 }
