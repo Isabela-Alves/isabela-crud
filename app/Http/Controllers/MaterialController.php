@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Material;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class MaterialController extends Controller
 {
@@ -30,11 +33,13 @@ class MaterialController extends Controller
         User::find(Auth::user()->id)
         ->myMaterials()
         ->create([
-            'description'=> $request->description,
-            'expiration'=> $request->expiration
+            'description' => $request->description,
+            'expiration' => $request->expiration
         ]);
+
         return redirect (route('dashboard'));
     }
+
 
     /**
      * Display the specified resource.
