@@ -5,76 +5,115 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+	<style>
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+		th, td {
+			padding: 8px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+        .cursor-pointer{
+            color: red;
+            text-decoration:underline;
+            cursor:pointer;
+        }
+        
+	</style>
+
+<div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" >
+        
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("Você está logado!") }}
-                    @foreach (Auth::user()->myMaterials as $material)
-                    <div>
-                        class="
-                        flex justify-between border-b mb-2 gap-4
-                        hover:bg-gray-300
-                        "
-                        x-data ="{showDelete: false,showEdit: false}">
-                        <div>{{$material ->description}}</div>
-                        <div>{{$material ->expiration}}</div>
-                        </div>
-                        <div class ="flex gap-2">
+            <table class="min-w-full rounded-md">
+          <thead>
+            <tr>
+              <th
+                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-800">
+                Title</th>
+              <th
+                class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-800">
+                Description</th>
+              <th class="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-800" colspan="3">
+                Action</th>
+            </tr>
+          </thead>
+          @foreach (Auth::user()->myMaterials as $material)
+          <tbody class="bg-gray-800" x-data="{showDelete:false, showEdit:false}">
+            
+            <tr>
+            
+              <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <div class="text-sm leading-5 text-white">{{$material ->description}}
+                </div>
+              </td>
+
+              <td class="px-6 py-4 whitespace-no-wrap border-b text-white border-gray-200">
+              <div class="text-sm leading-5 text-white">{{$material ->expiration}}
+                </div>
+              </td>
+
+              <td class="font-medium text-center whitespace-no-wrap border-b border-gray-200 ">
+              <div class="flex gap-2 flex-col">
                             <div>
-                               <span class="cursor-pointer px-2 bg-red-500 text-white" @click="showDelete = true">Delete</span>
+                                <span class="cursor-pointer px-2 bg-red-500 text-white" @click="showDelete = true">Deletar</span>
                             </div>
-                            <div> 
-                                <span clss="cursor-pointer px-2 bg-blue-500 text-white" @click="showEdit = true">Edit</span>
+                            <div>
+                                <span class="cursor-pointer px-2 bg-red-500 text-white" @click="showEdit = true">Editar</span>
                             </div>
                         </div>
                         <template x-if="showDelete">
-                            <div class="absolute top-0 bottom-0 left-0 right-0 bg-gray-800 bg-opacity-20 z-0">
-                                <div class="w-96 bg-white p-4 absolute left-1/4 right-1/4 z-10">
-                                    <h2 class="text-xl front-bold text-center">Are you sure?</h2>
+                            <div class="absolute top-0 bottom-0 left-0 right-0 bg-gray-600 bg-opacity-20 z-0">
+                                <div class="w-96 bg-gray-500 p-4 absolute left-1/4 right-1/4 top-1/4 z-10 rounded-md">
+                                    <h2 class="text-xl font-bold text-center">Tem certeza?</h2>
                                     <div class="flex justify-between mt-4">
-                                        <from action="{{ route('material.destroy', $material )}}" method="POST">
-                                            @csrf  
+                                        <form action="{{ route('material.destroy', $material) }}" method="POST">
+                                            @csrf
                                             @method('DELETE')
-                                        <x-danger-button>Delete anyway</x-danger-button>
-                                        </from>
-                                        <x-primary-button @click="showDelete = false">Cancel</x-primary-button>
+                                            <x-danger-button>Deletar</x-danger-button>
+                                        </form>
+                                        <x-primary-button @click="showDelete = false">Cancelar</x-primary-button>
                                     </div>
                                 </div>
                             </div>
                         </template>
-                        
+
                         <template x-if="showEdit">
-                            <div class="absolute top-0 bottom-0 left-0 right-0 bg-gray-800 bg-opacity-20 z-0">
-                               <div class="w-96 bg-white p-4 absolute left-1/4 right-1/4 top-1/4 z-10">
-                                <h2 class="text-xl front-bold text-center">{{ $material ->description }}</h2>
-                                <from class="my-4" acion="{{ route('material.update', $material)}}" method="POST">
-                                    @csrf  
-                                    @method('PUT')
-                                    <x-text-input name="description" placeholder="Description" value="{{ $material->description}}" />
-                                    <x-text-input name="expiration" placeholder="Expiration" value="{{ $material->expiration}}" />
-                                    <x-primary-button class="w-full text-center mt-2">Save</x-primary-button>
-                                </from>
-                                <x-danger-button @click="showEdit = false" class="w-full">Cancel</x-danger-button>
-                               </div>
+                            <div class="absolute top-0 bottom-0 left-0 right-0 bg-gray-600 bg-opacity-20 z-0">
+                                <div class="w-96 bg-gray-500 p-4 absolute left-1/4 right-1/4 top-1/4 z-10 rounded-md">
+                                    <h2 class="text-xl font-bold text-center">Edição</h2>
+                                        <form  class="my-4" action="{{ route('material.update', $material) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <x-text-input name="description" placeholder="Description" value="{{$material ->description}}" />
+                                            <x-text-input name="expiration" placeholder="Expiration" value="{{$material ->expiration}}" />
+                                            <x-primary-button class="w-full text-center mt-2">Salvar</x-primary-button>
+                                        </form>
+                                        <x-danger-button @click="showEdit = false" class="w-full">Cancelar</x-danger-button>
+                                </div>
                             </div>
                         </template>
-                </div>
-                @endforeach
+            
+          
+                    </div>
+              </td>
+          </tbody>
+        
+              
+                    @endforeach
+                 </table>
 
-                <from action="{{route('material.store')}}" method="POST">
-                    @csrf 
-                    <x-text-input name="description" placeholder="Description"/>
-                    <x-text-input name="expiration" placeholder="Expiration" />
-                    <x-primary-button>Save</x-primary-button>
-                </from>
+                    <form action="{{ route('material.store') }}" method="POST">
+                        @csrf
+                        <x-text-input name="description" placeholder="Description" />
+                        <x-text-input name="expiration" placeholder="Expiration" />
+                        <x-primary-button>Salvar</x-primary-button>
+                    </form>
+                </div>
             </div>
+
         </div>
     </div>
-</div>
 </x-app-layout>
-
-                                
-
-
-             
