@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nome');
-            $table->number('quantidade');
-            $table->string('fornecedor');
+            $table->string('modelo');
+            $table->integer('ano');
+            $table->string('cor');
+            $table->string('placa');
+            $table->float('preco');
             $table->foreignId('user_id');
         });
     }

@@ -10,8 +10,11 @@ class Material extends Model
     use HasFactory;
 
     protected $fillable = [
-        'description', //meu bancoo,essas sao as entidades da minha tabela//
-        'expiration',
+        'modelo', 
+        'ano',
+        'cor',
+        'placa',
+        'preco',
         'user_id'
     ];
 }

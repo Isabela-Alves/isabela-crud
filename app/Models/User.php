@@ -42,11 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function meusMaterials()
+    public function myMaterials()
     {
         return $this->hasMany(Material::class,'user_id');
     }
 
 
 }
-
